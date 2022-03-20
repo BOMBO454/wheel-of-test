@@ -3,10 +3,10 @@ declare namespace Entity {
     prize?: number;
     color?: string;
     nextStep?: boolean;
-  }
+  };
 
   type OuterLine = {
     width: number;
     color: number;
-  }
+  };
 }

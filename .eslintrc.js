@@ -23,6 +23,7 @@ module.exports = {
   rules: {
     'no-unused-vars': 'off',
     'import/namespace': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    '@typescript-eslint/no-empty-function': 'off'
   },
 };

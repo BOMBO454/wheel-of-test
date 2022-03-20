@@ -1,7 +1,7 @@
 declare namespace Entity {
   type Segment = {
     prize?: number;
-    color: number;
+    color?: string;
     nextStep?: boolean;
   }
 

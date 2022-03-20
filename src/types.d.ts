@@ -1,6 +1,6 @@
-namespace Entity{
+declare namespace Entity {
   type Segment = {
-    prize: number;
+    prize?: number;
     color: number;
     nextStep?: boolean;
   }

@@ -11,7 +11,7 @@ import { Container, Stage } from "@inlet/react-pixi/animated";
 import Wheel from "../Wheel/Wheel";
 import Arrow from "../Wheel/components/Arrow/Arrow";
 import { WheelContext } from "../../context/WheelContext";
-import { getWinner } from "../../utils/Utils";
+import { getNewRotation, getWinner } from "../../utils/Utils";
 
 const WheelOfFortune = forwardRef((props, ref) => {
   const { state, setState } = useContext(WheelContext);
@@ -21,7 +21,8 @@ const WheelOfFortune = forwardRef((props, ref) => {
   const wheel = { rotation: 0 };
   const [segments, setSegments] = useState(wheelsData[0].segments);
 
-  const spinWheel = async (to: number, duration: number) => {
+  // анимация вращения колеса
+  const spinWheelAnimation = async (to: number, duration: number) => {
     await gsap.to(wheel, {
       rotation: to,
       duration: duration,
@@ -32,6 +33,7 @@ const WheelOfFortune = forwardRef((props, ref) => {
     });
   };
 
+  // установка уровня кольца
   const setRaund = raund => {
     if (raund === 1) {
       wheel0.current.hide();
@@ -47,22 +49,23 @@ const WheelOfFortune = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    async clickHandler() {
+    // запуск вращения кольца
+    async spinWheel() {
       setState({ ...state, wheelIsSpinning: true });
-      const targetRotation = parseFloat(
-        (
-          state.rotation +
-          Math.PI * (Math.random() * 10 + 10) +
-          Math.random()
-        ).toFixed(2)
+      // угол вращения колеса
+      const targetRotation = state.rotation + getNewRotation();
+      await spinWheelAnimation(
+        targetRotation,
+        (targetRotation - state.rotation) / 10
       );
-      await spinWheel(targetRotation, (targetRotation - state.rotation) / 10);
       await getWinnerSector(segments, targetRotation);
       setState(prevState => ({ ...prevState, rotation: targetRotation }));
     },
   }));
 
+  // поиск выпавшего сектора
   const getWinnerSector = async (segments, rotation) => {
+    // выпавший сектор
     const winner = getWinner(segments, rotation);
     if (winner.nextStep) {
       setRaund(state.currentRaund + 1);

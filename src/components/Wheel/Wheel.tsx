@@ -28,9 +28,13 @@ const Wheel = forwardRef(
     ref
   ) => {
     const containerRef = useRef<ContainerType>(null);
+    // угол между секторами
     const angleStep = (2 * pi) / segments.length;
+    // смещение секторов для лучшей картинки в начале
     const angleShift = pi * 0.5 + pi / segments.length;
     const [state, setState] = useState({ opacity: 1, scale: 1 });
+
+    // анимационные издержки
     const s = { opacity: 1, scale: 1 };
 
     useEffect(() => {
@@ -38,6 +42,7 @@ const Wheel = forwardRef(
     }, [state.opacity]);
 
     useImperativeHandle(ref, () => ({
+      // функция прятания компонента
       async hide() {
         await gsap.to(s, {
           opacity: 0,
@@ -49,6 +54,7 @@ const Wheel = forwardRef(
           },
         });
       },
+      // функция масштабирования компонента
       async scale(scale) {
         await gsap.to(s, {
           opacity: 1,

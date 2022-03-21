@@ -29,6 +29,7 @@ const Segment: React.FC<Props> = ({
   scale,
 }: Props) => {
   const textRef = useRef(null);
+  // проверка на то где нужно рисовать текст
   const isSingle =
     (startAngle + Math.PI * 2) % (Math.PI * 2) ===
     (endAngle + Math.PI * 2) % (Math.PI * 2)

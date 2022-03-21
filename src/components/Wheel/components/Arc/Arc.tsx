@@ -12,6 +12,7 @@ type Props = {
   outerLine?: Entity.OuterLine;
 };
 
+// Рисование сектора
 export default PixiComponent("Arc", {
   create: () => new Graphics(),
   applyProps: (instance: Graphics, oldProps: Props, newProps: Props) => {

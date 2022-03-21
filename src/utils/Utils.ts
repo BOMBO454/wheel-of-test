@@ -9,3 +9,12 @@ export const getWinner = (
   const winnerSegment = Math.floor(currentRotation / angleStep);
   return segments[winnerSegment];
 };
+
+export const getNewRotation = (minTurns = 10, turnsRange = 10) => {
+  return parseFloat(
+    (
+      Math.PI * (Math.random() * turnsRange + minTurns) +
+      Math.random() * Math.PI * 2
+    ).toFixed(2)
+  );
+};

@@ -10,8 +10,8 @@ function App() {
   const setState = state => {
     setWheelState(state);
   };
-  const clickHandler = async () => {
-    await wheelRef.current.clickHandler();
+  const speenWheelHandler = async () => {
+    await wheelRef.current.spinWheel();
   };
   return (
     <div className="App">
@@ -20,7 +20,7 @@ function App() {
       </WheelContext.Provider>
       <SpinButton
         disabled={wheelState.wheelIsSpinning || wheelState.currentRaund === 2}
-        onClick={clickHandler}
+        onClick={speenWheelHandler}
       />
       <h1>{`level ${wheelState.currentRaund + 1}`}</h1>
       <span>{`${wheelState.currentPrize} Bold`}</span>

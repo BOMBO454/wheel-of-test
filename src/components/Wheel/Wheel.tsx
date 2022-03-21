@@ -71,15 +71,14 @@ const Wheel = forwardRef(
       >
         {segments.map((segment, index) => (
           <Segment
+            scale={state.scale}
             key={index}
-            x={0}
-            y={0}
             outerRadius={outerRadius}
             innerRadius={innerRadius}
             startAngle={angleStep * index - angleShift}
             endAngle={angleStep * (index + 1) - angleShift}
             fill={Number.parseInt(segment.color, 16)}
-            text={segment.prize ? `${segment.prize}` : `˅`}
+            text={segment.prize ? `${segment.prize} €` : `˅`}
             outerLine={outerLine}
           />
         ))}

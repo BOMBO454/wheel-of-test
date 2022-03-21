@@ -32,8 +32,6 @@ const WheelOfFortune = forwardRef((props, ref) => {
   };
 
   const setRaund = raund => {
-    console.log("log-state", state);
-    console.log("log-raund", raund);
     if (raund === 1) {
       wheel0.current.hide();
       wheel1.current.scale(1.5);
@@ -68,7 +66,7 @@ const WheelOfFortune = forwardRef((props, ref) => {
       (Math.PI * 2 - ((rotation - angleStep / 2) % (Math.PI * 2))) %
       (Math.PI * 2);
     const winnerSegment = Math.floor(currentRotation / angleStep);
-    if (segments[winnerSegment].nextStep) {
+    if (segments[winnerSegment].nextStep || true) {
       setRaund(state.currentRaund + 1);
       setState({
         ...state,

@@ -38,6 +38,7 @@
         "color": "C9C9C9"
       },
       {
+        "prize": 0,
         "color": "757575",
         "nextStep": true
       }
@@ -62,6 +63,7 @@
         "color": "757575"
       },
       {
+        "prize": 23,
         "color": "515151",
         "nextStep": true
       }
@@ -71,8 +73,7 @@
     "segments": [
       {
         "prize": 23,
-        "color": "333333",
-        "nextStep": true
+        "color": "333333"
       }
     ]
   }

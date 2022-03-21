@@ -11,6 +11,7 @@ import { Container, Stage } from "@inlet/react-pixi/animated";
 import Wheel from "../Wheel/Wheel";
 import Arrow from "../Wheel/components/Arrow/Arrow";
 import { WheelContext } from "../../context/WheelContext";
+import { getWinner } from "../../utils/Utils";
 
 const WheelOfFortune = forwardRef((props, ref) => {
   const { state, setState } = useContext(WheelContext);
@@ -41,6 +42,7 @@ const WheelOfFortune = forwardRef((props, ref) => {
     if (raund === 2) {
       wheel1.current.hide();
       wheel2.current.scale(3);
+      setSegments(wheelsData[2].segments);
     }
   };
 
@@ -55,28 +57,25 @@ const WheelOfFortune = forwardRef((props, ref) => {
         ).toFixed(2)
       );
       await spinWheel(targetRotation, (targetRotation - state.rotation) / 10);
-      await getSector(segments, targetRotation);
+      await getWinnerSector(segments, targetRotation);
       setState(prevState => ({ ...prevState, rotation: targetRotation }));
     },
   }));
 
-  const getSector = async (segments, rotation) => {
-    const angleStep = (2 * Math.PI) / segments.length;
-    const currentRotation =
-      (Math.PI * 2 - ((rotation - angleStep / 2) % (Math.PI * 2))) %
-      (Math.PI * 2);
-    const winnerSegment = Math.floor(currentRotation / angleStep);
-    if (segments[winnerSegment].nextStep || true) {
+  const getWinnerSector = async (segments, rotation) => {
+    const winner = getWinner(segments, rotation);
+    if (winner.nextStep) {
       setRaund(state.currentRaund + 1);
       setState({
         ...state,
         currentRaund: state.currentRaund + 1,
+        currentPrize: state.currentPrize + winner.prize,
         wheelIsSpinning: false,
       });
     } else {
       setState({
         ...state,
-        currentPrize: state.currentPrize + segments[winnerSegment].prize,
+        currentPrize: state.currentPrize + winner.prize,
         wheelIsSpinning: false,
       });
     }
